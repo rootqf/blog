@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>guestbook</title>
+    {% endif %}
+</head>
+<body>
+<form action="" method="post" name="login">
+    {{ form.hidden_tag() }}
+    呢　　称：{{ form.nickname(size=40) }}<br>
+    留言内容：{{ form.text(size=100) }}<br>
+    电子邮件：{{ form.email(size=40) }}<br>
+    <input type="submit" value="提交">
+</form>
+<br>
+<hr>
+<table border="1">
+    <tr>
+        <td>ID</td>
+        <td>呢　　称</td>
+        <td>留言内容</td>
+        <td>电子邮件</td>
+        <td>操作</td>
+    </tr>
+    {% if guestbook %}
+{#        {{ guestbook.id }}#}
+{#        {{ guestbook.nickname }}#}
+
+        {% for i in guestbook %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.nickname }}</td>
+                <td>{{ i.text }}</td>
+                <td>{{ i.email }}</td>
+                <td><a href="{{ url_for('guestbook', id = i.id) }}">删除</a></td>
+            </tr>
+        {% endfor %}
+
+    {% else %}
+        还没有人留言
+    {% endif %}
+
+</table>
+</body>
+</html>
