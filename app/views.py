@@ -18,8 +18,31 @@ def guestbook():
         db.session.commit()
         return redirect('/guestbook')
 
-    # guestbook = GuestBook.query.all()
+    # 删除数据
+    # getdata = GuestBook.query.filter_by(id=3).first()
+    # if not getdata is None:
+    #     db.session.delete(getdata)
+    #     db.session.commit()
+
+    # 查询数据
+    guestbook = GuestBook.query.all()
     # guestbook = GuestBook.query.filter_by(id=2).first()
-    guestbook = GuestBook.query.filter_by(id=2)
     # guestbook = GuestBook.query.filter_by(nickname='aaa1')
+
+    # 修改数据
+    # guestbook = GuestBook.query.filter_by(id=2).first()
+    # guestbook.nickname='aaa2'
+    # guestbook.email='aaa2@qq.com'
+    # db.session.add(guestbook)
+    # db.session.commit()
+
+    # 批量修改数据
+    # guestbook = GuestBook.query.all()
+    # for data in guestbook:
+    #     if data.id == 2:
+    #         data.nickname = data.nickname+'3'
+    #         db.session.add(data)
+    #         db.session.commit()
+
     return render_template('guestbook.html', title='留言簿', form=form, guestbook=guestbook)
+
