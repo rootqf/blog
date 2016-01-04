@@ -1,25 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     {% if title %}
         <title>{{ title }}</title>
     {% else %}
         <title>guestbook</title>
     {% endif %}
+
+    <style type="text/css">
+        .div_form {
+            font-family: Arial, 'proxima-nova', 'Helvetica Neue', sans-serif;
+            color: #000000;
+            margin-left: 300px;
+            margin-right: auto;
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
-<form action="" method="post" name="login">
+
+<form action="" method="post" name="addContent" class="div_form">
     {{ form.hidden_tag() }}
-    呢　　称：{{ form.nickname(size=40) }}<br>
-    留言内容：{{ form.text(size=100) }}<br>
-    电子邮件：{{ form.email(size=40) }}<br>
-    <input type="submit" value="提交">
+    <div class="form-group">
+        <label for="exampleInputNickname">呢　　称</label>
+        <input type="text" name="nickname" class="form-control" id="exampleInputNickname" placeholder="呢称"
+                maxlength="30" style="width:300px;">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail">电子邮件</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail" placeholder="Email" maxlength="30" style="width:300px;">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputTextarea">留言内容</label>
+        <textarea name="text" class="form-control" id="exampleInputTextarea" maxlength="200"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-default">提交</button>
 </form>
+
 <br>
 <hr>
-<table border="1">
-    <tr>
+
+<table class="table table-bordered table-hover" class="div_form">
+    <tr class="active">
         <td>ID</td>
         <td>呢　　称</td>
         <td>留言内容</td>
@@ -27,16 +58,13 @@
         <td>操作</td>
     </tr>
     {% if guestbook %}
-{#        {{ guestbook.id }}#}
-{#        {{ guestbook.nickname }}#}
-
         {% for i in guestbook %}
             <tr>
                 <td>{{ i.id }}</td>
                 <td>{{ i.nickname }}</td>
                 <td>{{ i.text }}</td>
                 <td>{{ i.email }}</td>
-                <td><a href="{{ url_for('guestbook', id = i.id) }}">删除</a></td>
+                <td><a href="{{ url_for('guestbook_delete', gbid = i.id) }}">删除</a></td>
             </tr>
         {% endfor %}
 

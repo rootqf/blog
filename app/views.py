@@ -1,9 +1,21 @@
 # -*- coding: UTF-8 -*-
 
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for
 from app import app
 from forms import GuestBookForm
 from models import db, GuestBook
+
+
+@app.route('/guestbook/delete/<gbid>')
+def guestbook_delete(gbid):
+    """
+    根据gbid主键值删除数据
+    """
+    getdata = GuestBook.query.filter_by(id=gbid).first()
+    if not getdata is None:
+        db.session.delete(getdata)
+        db.session.commit()
+    return redirect(url_for('guestbook'))
 
 
 @app.route('/guestbook', methods=['GET', 'POST'])
@@ -16,7 +28,7 @@ def guestbook():
         guesttext = GuestBook(nickname, text, email)
         db.session.add(guesttext)
         db.session.commit()
-        return redirect('/guestbook')
+        return redirect(url_for('guestbook'))
 
     # 删除数据
     # getdata = GuestBook.query.filter_by(id=3).first()
@@ -45,4 +57,3 @@ def guestbook():
     #         db.session.commit()
 
     return render_template('guestbook.html', title='留言簿', form=form, guestbook=guestbook)
-
