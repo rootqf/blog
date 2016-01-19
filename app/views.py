@@ -57,3 +57,6 @@ def guestbook():
     #         db.session.commit()
 
     return render_template('guestbook.html', title='留言簿', form=form, guestbook=guestbook)
+
+
+
