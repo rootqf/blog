@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- <script src="./testjson.js"></script> -->
+
+    <script type="text/javascript">
+        $.ajax({
+            url: "http://172.16.121.140:5000/testjson",
+            type: 'get',
+            dataType: "json",
+            success: function (data) {
+                <!-- alert("JSON对象：" + data); -->
+                $.each(data.tasks, function (i, n) {
+                    console.log(n.title);
+                    var row = $("#template").clone();
+                    row.find("#title").text(n.title);
+                    row.appendTo("#datatasks");
+                });
+            }
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $.getJSON('http://172.16.121.140:5000/testjson', function (data) {
+            console.log(data.tasks);
+        });
+    </script>
+</head>
+<body>
+Hello Json
+
+<table id="datatasks">
+    <tr id="template">
+        <td id="title"></td>
+    </tr>
+</table>
+
+</body>
+</html>

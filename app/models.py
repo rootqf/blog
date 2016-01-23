@@ -29,4 +29,4 @@ class GuestBook(db.Model):
         self.email = email
 
     def __repr__(self):
-        return '<nickname %r>' % self.nickname
+        return "{'id': %r, 'nickname': %r, 'text': %r, 'email': %r}" % (self.id, self.nickname, self.text, self.email)

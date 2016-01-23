@@ -1,9 +1,45 @@
 # -*- coding: UTF-8 -*-
 
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, jsonify
 from app import app
 from forms import GuestBookForm
 from models import db, GuestBook
+
+
+def allow_cross_domain(fun):
+    from functools import wraps
+    from flask import make_response
+
+    @wraps(fun)
+    def wrapper_fun(*args, **kwargs):
+        rst = make_response(fun(*args, **kwargs))
+        rst.headers['Access-Control-Allow-Origin'] = '*'
+        rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
+        allow_headers = "Referer,Accept,Origin,User-Agent"
+        rst.headers['Access-Control-Allow-Headers'] = allow_headers
+        return rst
+
+    return wrapper_fun
+
+
+@app.route('/testjson')
+@allow_cross_domain
+def testjson():
+    tasks = [
+        {
+            'id': 1,
+            'title': u'Buy groceries',
+            'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
+            'done': False
+        },
+        {
+            'id': 2,
+            'title': u'Learn Python',
+            'description': u'Need to find a good Python tutorial on the web',
+            'done': False
+        }
+    ]
+    return jsonify({'tasks': tasks})
 
 
 @app.route('/guestbook/delete/<gbid>')
@@ -55,8 +91,20 @@ def guestbook():
     #         data.nickname = data.nickname+'3'
     #         db.session.add(data)
     #         db.session.commit()
+    # print guestbook
 
+
+    gb_str = []
+    for i in guestbook:
+        result = '{"id":' + str(
+            i.id) + ', "nickname":' + i.nickname + ', "text":' + i.text + ', "email":' + i.email + '}'
+        gb_str.append(result)
+        # print result
+    # print gb_str
+
+    import json
+    # print json.dumps(guestbook, default=convert_to_builtin_type)
+    # print json.dumps(guestbook, default=lambda obj: obj.__dict__)
+    # json_str = json.dumps(guestbook)
+    # print json_str
     return render_template('guestbook.html', title='留言簿', form=form, guestbook=guestbook)
-
-
-
