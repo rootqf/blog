@@ -13,7 +13,7 @@
 
     <script type="text/javascript">
         $.ajax({
-            url: "http://172.16.121.140:5000/testjson",
+            url: "http://127.0.0.1:5000/testjson",
             type: 'get',
             dataType: "json",
             success: function (data) {
@@ -30,10 +30,31 @@
     </script>
 
     <script type="text/javascript">
-        $.getJSON('http://172.16.121.140:5000/testjson', function (data) {
+        $.getJSON('http://127.0.0.1:5000/testjson', function (data) {
             console.log(data.tasks);
         });
     </script>
+
+
+    <script type="text/javascript">
+        $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/jsonpost",
+            dataType: "jsonp",
+            jsonp: "callback", //传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+            //jsonpCallback:"flightHandler", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+            data: {id: '12345', nickname: 'qian'},
+            success: function (result) {
+                console.log(result.nickname)
+            },
+            error: function (result) {
+                alert("发送请求失败");
+            }
+        });
+
+    </script>
+
+
 </head>
 <body>
 Hello Json
