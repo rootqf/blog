@@ -57,10 +57,11 @@ def testjson():
     return jsonify({'tasks': tasks})
 
 
-@app.route('/jsonpost', methods=['POST', 'OPTIONS'])
+@app.route('/jsonpost1', methods=['GET', 'POST', 'OPTIONS'])
 @allow_origin
 def test_json_post():
     from flask import request, abort
+    print request.json
     if not request.json:
         abort(400)
     task = {
@@ -68,3 +69,16 @@ def test_json_post():
         'nickname': request.json.get('nickname')
     }
     return jsonify({'task': task}), 201
+
+
+@app.route('/jsonpost', methods=['GET', 'POST', 'OPTIONS'])
+def jsonpost():
+    from flask import request
+    print request.args
+    callback = request.args.get('callback', False)
+    request_id = request.args.get('id')
+    request_nickname = request.args.get('nickname')
+    str_json = callback + "({'id':" + request_id + ", 'nickname':" + request_nickname + "})"
+    print str_json
+    # return "%s({'a':1, 'b':2 })" % callback
+    return str_json

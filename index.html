@@ -40,18 +40,34 @@
         $.ajax({
             url: "http://127.0.0.1:5000/jsonpost",
             type: 'POST',
-            data:{id:"12345", nickname:"qian"},
-            dataType: "json",
+            data: {id: "12345", nickname: "qian1"},
+            dataType: "jsonp",
             success: function (data) {
-                <!-- alert("JSON对象：" + data); -->
                 $.each(data.task, function (i, n) {
-                    console.log(n.nickname);
+                    console.log(n.id);
+                    /*
                     var row = $("#template").clone();
                     row.find("#title").text(n.nickname);
                     row.appendTo("#datatasks");
+                    */
                 });
             }
         });
+    </script>
+
+
+    <script type="text/javascript">
+        /*
+         url = "http://127.0.0.1:5000/jsonpost"
+         $.ajax({
+         url: url,
+         type: 'get',
+         dataType: 'jsonp',
+         success: function (data) {
+         console.log('hi')
+         }
+         });
+         */
     </script>
 
 
