@@ -38,20 +38,20 @@
 
     <script type="text/javascript">
         $.ajax({
-            type: "POST",
             url: "http://127.0.0.1:5000/jsonpost",
-            dataType: "jsonp",
-            jsonp: "callback", //传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
-            //jsonpCallback:"flightHandler", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
-            data: {'id': '12345', 'nickname': 'qian'},
-            success: function (result) {
-                console.log(result.nickname)
-            },
-            error: function (result) {
-                alert("发送请求失败");
+            type: 'POST',
+            data:{id:"12345", nickname:"qian"},
+            dataType: "json",
+            success: function (data) {
+                <!-- alert("JSON对象：" + data); -->
+                $.each(data.task, function (i, n) {
+                    console.log(n.nickname);
+                    var row = $("#template").clone();
+                    row.find("#title").text(n.nickname);
+                    row.appendTo("#datatasks");
+                });
             }
         });
-
     </script>
 
 
