@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*
 
-from flask.ext.wtf import Form
+# flask.ext.wtf换为flask_wtf
+# from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 

@@ -30,12 +30,6 @@ def guestbook():
         db.session.commit()
         return redirect(url_for('guestbook'))
 
-    # 删除数据
-    # getdata = GuestBook.query.filter_by(id=3).first()
-    # if not getdata is None:
-    #     db.session.delete(getdata)
-    #     db.session.commit()
-
     # 查询数据
     guestbook = GuestBook.query.all()
     # guestbook = GuestBook.query.filter_by(id=2).first()
@@ -57,18 +51,4 @@ def guestbook():
     #         db.session.commit()
     # print guestbook
 
-
-    gb_str = []
-    for i in guestbook:
-        result = '{"id":' + str(
-            i.id) + ', "nickname":' + i.nickname + ', "text":' + i.text + ', "email":' + i.email + '}'
-        gb_str.append(result)
-        # print result
-    # print gb_str
-
-    import json
-    # print json.dumps(guestbook, default=convert_to_builtin_type)
-    # print json.dumps(guestbook, default=lambda obj: obj.__dict__)
-    # json_str = json.dumps(guestbook)
-    # print json_str
     return render_template('guestbook.html', title='留言簿', form=form, guestbook=guestbook)
